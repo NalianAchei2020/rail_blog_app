@@ -1,15 +1,15 @@
-<div id="post" >
-  <h3><%= @post.title %> by <%= @post.author.name %></h3>
-  <p class="counter">
-    Comments: <%= @post.comments_counter.to_i %>, Likes: <%= @post.likes_counter.to_i %>
-  </p>
-  <p><%= @post.text %></p>
+<div class = 'posts_page'>
+<div class= 'individual_post'>
+<h2>Post #<%= @post.id %></h2>
+<h3><%= @post.title %></h3>
+<p class='number_of_posts'> Comments: <%= @post.comments_counter %> Likes: <%= @post.likes_counter %></p>
+<p class = 'whole_post'><%= @post.text %></p>
 </div>
-
-<ul id="comment_container">
-  <% @post.comments.each do |comment| %>
-    <li id="comment">
-      <p><%= comment.user.name %>: <%= comment.text %></p>
-    </li>
-  <% end %>
-</ul>
+<h3>Comments:</h3>
+<% @post.comments.each do |comment| %>
+<div class=comments_div>
+  <p><%= comment.text %></p>
+  <p>Written by: <%= comment.author.name %></p>
+  </div>
+<% end %>
+</div>
