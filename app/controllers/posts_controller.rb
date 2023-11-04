@@ -1,13 +1,12 @@
 class PostsController < ApplicationController
-  layout 'standard'
   def index
     @user = User.find(params[:user_id])
-    @posts = Post.where(author_id: params[:user_id]).order(id: :asc)
-    @posts = @posts.paginate(page: params[:page], per_page: 10)
+    @posts = @user.posts.includes(:comments)
   end
 
   def show
-    @post = Post.find(params[:id])
+    @user = User.find(params[:user_id])
+    @post = @user.posts.includes(:comments).find(params[:id])
   end
 
   def new
@@ -18,10 +17,8 @@ class PostsController < ApplicationController
     @post = Post.new(params.require(:post).permit(:title, :text))
     @post.author = current_user
     if @post.save
-      flash[:success] = 'Post created successfully!'
-      redirect_to user_posts_url
+      redirect_to user_posts_path
     else
-      flash.now[:error] = 'Error: Post could not be created!'
       render :new, locals: { post: @post }
     end
   end
