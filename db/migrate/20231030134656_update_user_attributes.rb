@@ -1,4 +1,4 @@
-class UpdateUserAttributes < ActiveRecord::Migration[7.1]
+class UpdateUserAttributes < ActiveRecord::Migration[7.0]
   def change
     user_to_update_tom = User.find_by(name: 'Tom')
     user_to_update_lilly = User.find_by(name: 'Lilly')
