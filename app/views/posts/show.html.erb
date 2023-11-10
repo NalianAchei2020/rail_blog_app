@@ -1,12 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
-  </head>
-  <body>
-    <h1>Here is a selected post with for a given user</h1>
-  </body>
-</html>
+<div class='posts_page'>
+  <div class='individual_large_post'>
+    <h3><%= @post.title %></h3>
+    <p class='number_of_posts'> Comments: <%= @post.comments_counter %> Likes: <%= @post.likes_counter %></p>
+    <p class='whole_post'><%= @post.text %></p>
+    
+    <%= link_to new_user_post_comment_path(@post), class: 'btn' do %>
+      <button class='btn'>Add a comment</button>
+    <% end %>
+    
+    <%= link_to new_user_post_like_path(@post.author), class: "btn" do %>
+      <button class='btn'>Add a like</button>
+    <% end %>
+
+  </div>
+
+  <h3>Comments:</h3>
+  <% @post.comments.each do |comment| %>
+    <div class='comments_div'>
+      <p><%= comment.text %></p>
+      <p>Written by: <%= comment.author.name %></p>
+    </div>
+  <% end %>
+</div>

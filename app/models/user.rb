@@ -1,12 +1,26 @@
 class User < ApplicationRecord
-  has_many :post, foreign_key: 'author_id'
-  has_many :comment
-  has_many :like
+  has_many :posts, foreign_key: :author_id
+  has_many :comments
+  has_many :likes
 
   validates :name, presence: true
-  validates :posts_counter, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validate :validation_posts_counter
 
-  def three_recent_posts
-    Post.where(author: self).order(created_at: :desc).first(3)
+  after_initialize :initialize_post_counter
+
+  def most_recent_post(limit = 3)
+    posts.order(created_at: :desc).limit(limit)
+  end
+
+  private
+
+  def validation_posts_counter
+    return unless post_counter.present? && (!post_counter.is_a?(Integer) || post_counter.negative?)
+
+    errors.add(:post_counter, 'It must be a number greater than or equal to zero') unless post_counter.zero?
+  end
+
+  def initialize_post_counter
+    self.post_counter ||= 0
   end
 end

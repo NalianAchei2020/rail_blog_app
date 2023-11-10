@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
-  </head>
-  <body>
-    <h1>Here is a list of users</h1>
-  </body>
-</html>
+<div class='main_div'>
+  <% @users.each do |user| %>
+    <div class='user_div'>
+      <%= link_to user_path(user) do %>
+        <div class='user_photo'>
+          <%= image_tag user.photo %>
+        </div>
+        <div class='user_info'>
+          <p class='user_name'><%= user.name %></p>
+          <p class='number_of_posts'>Number of posts: <%= user.post_counter %></p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
