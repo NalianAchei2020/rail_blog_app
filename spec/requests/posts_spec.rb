@@ -8,7 +8,7 @@ RSpec.describe 'Posts', type: :request do
     Post.create(
       title: 'My first post',
       text: 'This is my very first post',
-      author: author
+      author:
     )
   end
 
