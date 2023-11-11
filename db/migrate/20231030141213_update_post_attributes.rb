@@ -1,4 +1,4 @@
-class UpdatePostAttributes < ActiveRecord::Migration[7.1]
+class UpdatePostAttributes < ActiveRecord::Migration[7.0]
   def change
     post_to_update_by_tom_one = Post.find_by(id: 1)
     post_to_update_by_tom_two = Post.find_by(id: 2)
