@@ -1,37 +1,49 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  let(:user) { User.create(name: 'Agneta', id: 1) }
+  context 'GET /index' do
+    before :each do
+      get users_path
+    end
 
-  describe 'GET /index' do
-    before { get users_url }
-
-    it 'renders a successful response' do
+    it 'returns successful response' do
       expect(response).to be_successful
     end
 
-    it 'renders the correct template' do
-      expect(response).to render_template('users/index')
+    it 'returns http status 200' do
+      expect(response.status).to eq(200)
     end
 
-    it 'includes correct placeholder text in the response body' do
+    it 'renders the right view file' do
+      expect(response).to render_template(:index)
+    end
+
+    it 'renders the right placeholder' do
       expect(response.body).to include('<h1>Here is a list of users</h1>')
     end
   end
 
-  describe 'GET /show' do
-    before { get user_url(user) }
+  context 'GET /show' do
+    let(:valid_attributes) { { 'name' => 'Tom' } }
+    let(:user) { User.create! valid_attributes }
+    before :each do
+      get user_url(user)
+    end
 
-    it 'renders a successful response' do
+    it 'returns successful response' do
       expect(response).to be_successful
     end
 
-    it 'renders the correct template' do
-      expect(response).to render_template('users/show')
+    it 'returns http status 200' do
+      expect(response.status).to eq(200)
     end
 
-    it 'includes correct placeholder text in the response body' do
-      expect(response.body).to include("<h1>#{user.name}</h1>")
+    it 'renders the right view file' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'renders the right placeholder' do
+      expect(response.body).to include('<h1>Here is a selected user</h1>')
     end
   end
 end

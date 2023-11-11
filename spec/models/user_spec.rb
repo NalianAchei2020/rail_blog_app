@@ -1,39 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.') }
+  context '#create' do
+    it 'is valid with existing name' do
+      expect(User.create(name: 'Tom')).to be_valid
+    end
 
-  before { subject.save }
+    it 'is not valid with blank name' do
+      expect(User.create(name: nil)).to_not be_valid
+    end
 
-  it 'name should be present' do
-    subject.name = nil
-    expect(subject).to_not be_valid
+    it 'is not valid with non-numeric posts_counter' do
+      expect(User.create(name: 'Tom', posts_counter: 'five')).to_not be_valid
+    end
+
+    it 'is not valid with float posts_counter' do
+      expect(User.create(name: 'Tom', posts_counter: 1.5)).to_not be_valid
+    end
+
+    it 'is not valid with negative posts_counter' do
+      expect(User.create(name: 'Tom', posts_counter: -1)).to_not be_valid
+    end
+
+    it 'is valid with integer posts_counter' do
+      expect(User.create(name: 'Tom', posts_counter: 5)).to be_valid
+    end
   end
 
-  it 'name should be present' do
-    expect(subject).to be_valid
-  end
+  context '#three_recent_posts' do
+    before :all do
+      @user = User.create(name: 'Tom')
+      5.times { |post_i| Post.create(author: @user, title: (post_i + 1).to_s) }
+    end
 
-  it 'updates post_counter when a post is added' do
-    initial_post_counter = 0
-    expect(subject.post_counter).to eq(initial_post_counter)
+    it 'returns three posts' do
+      expect(@user.three_recent_posts.length).to eq 3
+    end
 
-    subject.posts.create(title: 'test', text: 'test')
-    expect(subject.reload.post_counter).to eq(initial_post_counter + 1)
-  end
-
-  it 'should raise an error if post_counter is negative' do
-    subject.post_counter = -1
-    expect(subject).not_to be_valid
-  end
-
-  it 'should be valid when post_counter is zero' do
-    subject.post_counter = 0
-    expect(subject).to be_valid
-  end
-
-  it 'should be valid when post_counter is positive' do
-    subject.post_counter = 5
-    expect(subject).to be_valid
+    it 'returns most recent posts with titles 3, 4, 5' do
+      titles = []
+      @user.three_recent_posts.each do |post|
+        titles.push(post.title.to_i)
+      end
+      expect(titles).to all(be_between(3, 5))
+    end
   end
 end

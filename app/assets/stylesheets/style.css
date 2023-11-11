@@ -1,82 +1,103 @@
 * {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-img {
-  height: 10rem;
-  width: auto;
-}
-
-.user_div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 3rem 1.5rem 3rem;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
-}
-
-.user_info {
-  width: 60rem;
-  padding: 0.5rem;
-}
-
-.user_name {
-  font-size: 2.5rem;
   margin: 0;
-  text-align: left;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.number_of_posts {
-  text-align: right;
-  font-size: 1.3rem;
+body {
+  font-family: Helvetica, Geneva, Arial, sans-serif;
 }
 
-.user_bio {
-  padding: 1.5rem 3rem 1.5rem 3rem;
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
-  font-size: 1.7rem;
+li {
+  list-style-type: none;
 }
 
-.posts {
-  padding: 1.5rem 3rem 1.5rem 3rem;
-  font-size: 1.5rem;
+a,
+img {
+  text-decoration: none;
+  color: #fff;
 }
 
-.individual_post {
-  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.4);
-  margin-top: 2rem;
-  padding: 1rem;
+#post {
+  display: block;
+}
+
+#container {
+  background-color: rgb(54, 54, 54);
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+#container,
+#post_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#user_container {
+  display: flex;
+  height: 5rem;
+}
+
+#user_text,
+#post {
+  border: 1px solid rgb(94, 95, 97);
+  background-color: rgb(47, 48, 49);
+  color: rgb(209, 209, 209);
 }
 
 h2 {
-  margin: 0.3rem;
-  font-size: 1.5rem;
+  color: rgb(240, 240, 240);
+}
+
+#user_bio,
+#post,
+#comment_container {
+  padding: 0.5rem;
 }
 
 h3 {
-  margin: 0.3rem;
-  font-size: 1.3rem;
+  margin-bottom: 1rem;
 }
 
-.number_of_comments {
-  margin: 0.3rem;
-  font-style: italic;
+.counter {
   text-align: right;
-  font-size: 1.2rem;
 }
 
-.comments_div > p {
-  font-size: 1.2rem;
-  font-style: italic;
-  margin: 1rem;
-  border: 1px solid rgba(128, 128, 128, 0.728);
+#user_text {
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 4;
 }
 
-.posts_page {
-  margin: 0.3rem;
+#user_text p {
+  align-self: flex-end;
 }
 
-.whole_post {
-  font-size: 1.8rem;
+#user_photo {
+  flex: 1;
+}
+
+.pagination {
+  margin: 0 auto;
+  color: rgb(240, 240, 240);
+}
+
+.pagination a {
+  text-decoration: underline;
+  color: rgb(159, 154, 231);
+}
+
+#comment_container,
+#user_bio {
+  border: 1px solid rgb(159, 154, 231);
+  background-color: rgb(59, 58, 71);
+  color: rgb(240, 240, 240);
+}
+
+#comment {
+  font-style: italic;
 }

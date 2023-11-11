@@ -1,52 +1,51 @@
 require 'rails_helper'
 
 RSpec.describe 'Posts', type: :request do
-  let(:user) { User.create(name: 'Agneta', id: 1) }
-  let(:user_url) { user_url(user) }
-
-  def create_post(author)
-    Post.create(
-      title: 'My first post',
-      text: 'This is my very first post',
-      author:
-    )
-  end
-
-  describe 'GET /index' do
-    before do
-      user_post = create_post(user)
-      get user_post_path(user, user_post)
+  context 'GET /index' do
+    before :each do
+      get '/users/:user_id/posts'
     end
 
-    it 'renders a successful response' do
+    it 'returns successful response' do
       expect(response).to be_successful
     end
 
-    it 'renders the correct template' do
-      expect(response).to render_template('posts/show')
+    it 'returns http status 200' do
+      expect(response.status).to eq(200)
     end
 
-    it 'includes correct placeholder text in the response body' do
-      expect(response.body).to include('<h1>Here is a post for given user</h1>')
+    it 'renders the right view file' do
+      expect(response).to render_template(:index)
+    end
+
+    it 'renders the right placeholder' do
+      expect(response.body).to include('<h1>Here is a list of posts for a given user</h1>')
     end
   end
 
-  describe 'GET /show' do
-    before do
-      user_post = create_post(user)
-      get user_post_path(user, user_post)
+  context 'GET /show' do
+    let(:user) { User.create(name: 'Tom') }
+    let(:valid_attributes) { { 'author' => user, 'title' => 'Title' } }
+    let(:post) { Post.create! valid_attributes }
+
+    before :each do
+      get "/users/:user_id/posts/#{post.id}"
     end
 
-    it 'renders a successful response' do
+    it 'returns successful response' do
       expect(response).to be_successful
     end
 
-    it 'renders the correct template' do
-      expect(response).to render_template('posts/show')
+    it 'returns http status 200' do
+      expect(response.status).to eq(200)
     end
 
-    it 'includes correct placeholder text in the response body' do
-      expect(response.body).to include('<h1>Here is a post for given user</h1>')
+    it 'renders the right view file' do
+      expect(response).to render_template(:show)
+    end
+
+    it 'renders the right placeholder' do
+      expect(response.body).to include('<h1>Here is a selected post for a given user</h1>')
     end
   end
 end
